@@ -1,0 +1,198 @@
+openapi: 3.0.3
+info:
+  title: Swagger Student
+  version: 1.0.0
+  description: "学生服务，可对学生信息进行增删改查操作"
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://student.swagger.io/v2
+  - url: http://student.swagger.io/v2
+tags:
+  - name: StudentServer
+    description: "学生服务"
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+paths:
+  /v1/students:
+    post:
+      tags:
+        - StudentServer
+      summary: "新增一个学生"
+      operationId: AddStudent
+      requestBody:
+        description: "学生信息"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+            example:
+              id: 0
+              name: "张三"
+              age: 18
+              sex: "boy"
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      x-request-examples-description-1: "新增学生请求示例"
+      x-request-examples-url-1: "POST https://{endpoint}/v1/students"
+      x-request-examples-1:
+        id: 0
+        name: "张三"
+        age: 18
+        sex: "boy"
+    put:
+      tags:
+        - StudentServer
+      summary: "更新学生信息"
+      operationId: UpdateStudent
+      requestBody:
+        description: "学生信息"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+            example:
+              id: 0
+              name: "张三"
+              age: 18
+              sex: "boy"
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      x-request-examples-description-1: "更新学生请求示例"
+      x-request-examples-url-1: "PUT https://{endpoint}/v1/students"
+      x-request-examples-1:
+        id: 0
+        name: "张三"
+        age: 18
+        sex: "boy"
+  /v1/students/{id}:
+    get:
+      tags:
+        - StudentServer
+      summary: "通过学号查询学生信息"
+      operationId: ShowStudentById
+      parameters:
+        - name: id
+          in: path
+          description: "学号"
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 100
+            example: 0
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+              example:
+                id: 0
+                name: "张三"
+                age: 18
+                sex: "boy"
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+      x-request-examples-description-1: "查询学生信息请求示例"
+      x-request-examples-url-1: "GET https://{endpoint}/v1/students/0"
+    delete:
+      tags:
+        - StudentServer
+      summary: "删除学生信息"
+      operationId: DeleteStudentById
+      parameters:
+        - name: id
+          in: path
+          description: "学号"
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 100
+            example: 0
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+      x-request-examples-description-1: "删除学生请求示例"
+      x-request-examples-url-1: "DELETE https://{endpoint}/v1/students/0"
+components:
+  schemas:
+    Student:
+      description: "学生信息"
+      required:
+        - id
+        - name
+        - age
+        - sex
+      properties:
+        id:
+          description: "学号"
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          example: 0
+        name:
+          description: "姓名"
+          type: string
+          minLength: 0
+          maxLength: 10
+          example: "张三"
+        age:
+          description: "年龄"
+          type: integer
+          format: int32
+          minimum: 6
+          maximum: 30
+          example: 18
+        sex:
+          description: "性别"
+          type: string
+          enum:
+            - boy
+            - girl
+          minLength: 3
+          maxLength: 4
+          example: boy
