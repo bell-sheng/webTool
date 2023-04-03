@@ -3,3 +3,6 @@
 /application/target
 /service/target
 /website/target
+/website/node_modules
+/application/src/main/resources/public
+/website/build
