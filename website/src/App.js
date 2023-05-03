@@ -1,5 +1,5 @@
 import React, {memo} from "react";
-import "./assets/css/base.css"
+import "@/assets/css/base.css"
 
 function App() {
     return (
