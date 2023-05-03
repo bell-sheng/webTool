@@ -1,13 +1,45 @@
 import React, {Component, memo} from 'react';
+import classnames from "classnames";
+import {HeaderLeft, HeaderRight, HomeHeaderWrapper} from "./style";
 import {NavLink} from "react-router-dom";
+import {headerLinks} from "../../services/local-data";
 
 class HomeHeader extends Component {
+
+
     render() {
+        const showItem = (item, index) => {
+            return (
+                <NavLink to={item.link}>
+                    {item.title}
+                    <i className="sprite_01 icon"></i>
+                </NavLink>
+            )
+        }
+
         return (
-            <div>
-                <NavLink to="/">音乐库</NavLink>
-                <NavLink to="/mine">我的音乐</NavLink>
-            </div>
+            <HomeHeaderWrapper>
+                <div className="wrap-v1 content">
+                    <HeaderLeft>
+                        <a className="logo sprite_01" href="#/"/>
+                        <div className="select-list">
+                            {
+                                headerLinks.map((item, index) => {
+                                    return (
+                                        <div className={classnames("select-item")} key={item.title}>
+                                            {showItem(item, index)}
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </HeaderLeft>
+                    <HeaderRight>
+                        <div className="center">联系作者</div>
+                    </HeaderRight>
+                </div>
+                <div className="divider"></div>
+            </HomeHeaderWrapper>
         );
     }
 }
