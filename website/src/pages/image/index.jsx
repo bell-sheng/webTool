@@ -43,13 +43,13 @@ class ImageManger extends Component {
             },
         };
         const validateMessages = {
-            required: '${label} is required!',
+            required: '${label}必须填写!',
             types: {
                 email: '${label} is not a valid email!',
                 number: '${label} is not a valid number!',
             },
             number: {
-                range: '${label} must be between ${min} and ${max}',
+                range: '${label}必须在${min}~${max}之间',
             },
         };
 
