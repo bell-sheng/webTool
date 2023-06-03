@@ -1,5 +1,5 @@
 import React, {Component, memo} from 'react';
-import {Button, Col, Form, Image, Input, InputNumber, Layout, Row, Select, Spin} from 'antd';
+import {Button, Col, Form, Image, Input, InputNumber, Row, Select, Spin} from 'antd';
 
 class ImageManger extends Component {
     constructor(props) {
@@ -22,7 +22,8 @@ class ImageManger extends Component {
         });
         const openai = new OpenAIApi(configuration);
         const response = await openai.createImage({
-            ...values
+            ...values,
+            response_format: 'b64_json',
         });
         console.log(response);
         this.setState({
@@ -117,10 +118,10 @@ class ImageManger extends Component {
                     </Col>
                     <Spin tip="Loading..." spinning={this.state.isLoading}>
                         <Col span={12}>
-                            <div>
+                            <div style={{padding: 10}}>
                                 {
                                     this.state.generateImages.map((value) => {
-                                        return <Image width={200} src={value.url}/>
+                                        return <Image width={200} src={"data:image/png;base64," + value.b64_json}/>
                                     })
                                 }
                             </div>
