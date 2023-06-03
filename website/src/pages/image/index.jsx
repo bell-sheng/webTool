@@ -19,17 +19,26 @@ class ImageManger extends Component {
         const {Configuration, OpenAIApi} = require("openai");
         const configuration = new Configuration({
             apiKey: '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',
+            organization: 'org-6m89808nzLMDoGAcrKjF2vBz',
         });
         const openai = new OpenAIApi(configuration);
         const response = await openai.createImage({
             ...values,
             response_format: 'b64_json',
+        }).catch(error => {
+            console.log(error);
+            this.setState({
+                generateImages: [],
+                isLoading: false,
+            });
         });
         console.log(response);
-        this.setState({
-            generateImages: response.data.data,
-            isLoading: false,
-        })
+        if (response && response.data) {
+            this.setState({
+                generateImages: response.data.data,
+                isLoading: false,
+            })
+        }
     };
 
     render() {
