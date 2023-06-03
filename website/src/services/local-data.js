@@ -6,5 +6,9 @@ export const headerLinks = [
   {
     title: "我的音乐",
     link: "/mine"
+  },
+  {
+    title: "AI画图",
+    link: "/image"
   }
 ]

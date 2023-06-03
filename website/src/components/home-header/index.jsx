@@ -3,6 +3,8 @@ import classnames from "classnames";
 import {HeaderLeft, HeaderRight, HomeHeaderWrapper} from "./style";
 import {NavLink} from "react-router-dom";
 import {headerLinks} from "../../services/local-data";
+import {Input} from "antd";
+import {SearchOutlined} from '@ant-design/icons';
 
 class HomeHeader extends Component {
 
@@ -35,12 +37,17 @@ class HomeHeader extends Component {
                         </div>
                     </HeaderLeft>
                     <HeaderRight>
-                        <div className="center">联系作者</div>
+                        <Input className="search" placeholder={"音乐"} prefix={<SearchOutlined/>}/>
+                        <div className="center" onClick={this.connectDeveloper}>联系作者</div>
                     </HeaderRight>
                 </div>
                 <div className="divider"></div>
             </HomeHeaderWrapper>
         );
+    }
+
+    connectDeveloper() {
+        console.log("联系作者")
     }
 }
 
