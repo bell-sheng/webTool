@@ -6,7 +6,7 @@ import {Route, Routes} from "react-router-dom";
 function Router() {
     return (
         <Routes>
-            <Route path={"/"} element={<MusicManger/>}/>
+            <Route path={"/"} element={<ImageManger/>}/>
             <Route path={"/mine"} element={<MineManger/>}/>
             <Route path={"/image"} element={<ImageManger/>}/>
         </Routes>
