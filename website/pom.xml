@@ -46,7 +46,7 @@
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <arguments>run build</arguments>
+                            <arguments>run build --registry=https://registry.npm.taobao.org</arguments>
                         </configuration>
                     </execution>
                 </executions>
