@@ -73,11 +73,11 @@
                         </goals>
                         <configuration>
                             <!--输出文件路径-->
-                            <outputDirectory>${basedir}\..\application\src\main\resources\public</outputDirectory>
+                            <outputDirectory>${basedir}/../application/src/main/resources/public</outputDirectory>
                             <resources>
                                 <resource>
                                     <!--前端代码地址-->
-                                    <directory>${basedir}\build</directory>
+                                    <directory>${basedir}/build</directory>
                                 </resource>
                             </resources>
                             <overwrite>true</overwrite>
