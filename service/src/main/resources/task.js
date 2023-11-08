@@ -1,6 +1,5 @@
-var HashMap = Java.type('java.util.HashMap');
-var Map = Java.type('java.util.Map');
-var System = Java.type('java.lang.System');
+var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+const HOST_URL = "http://localhost:8090";
 
 /**
  * 魔方网表中生成BPM任务后回调此方法向第三方系统创建待办
@@ -10,12 +9,10 @@ var System = Java.type('java.lang.System');
  * @param url 任务处理链接
  */
 function createTask(id, name, assignee, url) {
-//TODO:调用第三方待办接口创建待办
     var targets = {'Id': '12fe2de141b7b97b32d1af34204a9f54'};
-    var notifyTodoSendContext = new NotifyTodoSendContext("1", "流程管理", id, name, url, 2, targets);
+    var notifyTodoSendContext = new NotifyTodoSendContext("mis", "流程管理", id, name, url, 2, targets);
     notifyTodoSendContext.docCreator = assignee;
-    var body = JSON.stringify(notifyTodoSendContext);
-    print(body);
+    sendMessages("/v1/students", notifyTodoSendContext);
 }
 
 /**
@@ -26,6 +23,20 @@ function createTask(id, name, assignee, url) {
 function completeTask(id) {
 //TODO:调用第三方待办处理接口改变待办为已办
 
+}
+
+function sendMessages(url, body) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", HOST_URL + url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(body));
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            console.log(xhr.responseText);
+        } else {
+            console.log('Error: ' + xhr.status);
+        }
+    };
 }
 
 function NotifyTodoSendContext(appName, modelName, modelId, subject, link, type, targets) {
@@ -48,3 +59,5 @@ function formatDate(date) {
     var seconds = ("0" + date.getUTCSeconds()).slice(-2);
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 }
+
+createTask("1", "2", "3", "4");

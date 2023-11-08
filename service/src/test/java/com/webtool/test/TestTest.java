@@ -1,5 +1,7 @@
 package com.webtool.test;
 
+import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
+
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -11,8 +13,8 @@ public class TestTest {
 
     @org.junit.Test
     public void testScript() {
-        ScriptEngineManager engineManager = new ScriptEngineManager();
-        ScriptEngine scriptEngine = engineManager.getEngineByName("nashorn");
+        NashornScriptEngineFactory factory = new NashornScriptEngineFactory();
+        ScriptEngine scriptEngine = factory.getScriptEngine("javascript");
         String fileName = "src/main/resources/task.js";
         String functionName = "createTask";
         try{
