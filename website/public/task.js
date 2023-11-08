@@ -1,4 +1,4 @@
-var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const HOST_URL = "http://localhost:8090";
 const APP_NAME = "mis";
 const MODEL_NAME_MAP = new Map([[1, 'Test'], [2, 'Test1']]);
@@ -11,9 +11,9 @@ const MODEL_NAME_MAP = new Map([[1, 'Test'], [2, 'Test1']]);
  * @param url 任务处理链接
  */
 function createTask(id, name, assignee, url) {
-    var targets = {'LoginName': assignee};
-    var type = 1;
-    var notifyTodoSendContext = new NotifyTodoSendContext(APP_NAME, MODEL_NAME_MAP.get(type), id, name, url, type, targets);
+    const targets = {'LoginName': assignee};
+    const type = 1;
+    const notifyTodoSendContext = new NotifyTodoSendContext(APP_NAME, MODEL_NAME_MAP.get(type), id, name, url, type, targets);
     notifyTodoSendContext.docCreator = assignee;
     notifyTodoSendContext.others = {'mobileLink': url};
     sendMessages("/v1/message", notifyTodoSendContext);
@@ -25,14 +25,14 @@ function createTask(id, name, assignee, url) {
  *
  */
 function completeTask(id) {
-    var type = 1;
-    var notifyTodoRemoveContext = new NotifyTodoRemoveContext(APP_NAME, MODEL_NAME_MAP.get(type), id, type);
+    const type = 1;
+    const notifyTodoRemoveContext = new NotifyTodoRemoveContext(APP_NAME, MODEL_NAME_MAP.get(type), id, type);
     notifyTodoRemoveContext.targets = {'LoginName': 'User'};
     sendMessages("/v1/message", notifyTodoRemoveContext);
 }
 
 function sendMessages(url, body) {
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open("POST", HOST_URL + url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(body));
@@ -51,6 +51,9 @@ function sendMessages(url, body) {
             console.log('Operation successful.');
         }
     };
+    xhr.onerror = function (){
+        console.log('Network Error.');
+    }
 }
 
 function NotifyTodoSendContext(appName, modelName, modelId, subject, link, type, targets) {
@@ -72,12 +75,12 @@ function NotifyTodoRemoveContext(appName, modelName, modelId, optType) {
 }
 
 function formatDate(date) {
-    var year = date.getUTCFullYear();
-    var month = ("0" + (date.getUTCMonth() + 1)).slice(-2);
-    var day = ("0" + date.getUTCDate()).slice(-2);
-    var hours = ("0" + date.getUTCHours()).slice(-2);
-    var minutes = ("0" + date.getUTCMinutes()).slice(-2);
-    var seconds = ("0" + date.getUTCSeconds()).slice(-2);
+    const year = date.getUTCFullYear();
+    const month = ("0" + (date.getUTCMonth() + 1)).slice(-2);
+    const day = ("0" + date.getUTCDate()).slice(-2);
+    const hours = ("0" + date.getUTCHours()).slice(-2);
+    const minutes = ("0" + date.getUTCMinutes()).slice(-2);
+    const seconds = ("0" + date.getUTCSeconds()).slice(-2);
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 }
 
