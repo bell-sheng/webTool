@@ -13,7 +13,8 @@ public class MessagesTestController implements MessageTestServiceApi {
     public ResponseEntity<NotifyTodoAppResult> revMessage(String body) {
         log.info("start to add student:{}", body);
         NotifyTodoAppResult notifyTodoAppResult = new NotifyTodoAppResult();
-        notifyTodoAppResult.setReturnState(2);
+        notifyTodoAppResult.setReturnState(0);
+        notifyTodoAppResult.setMessage("");
         return ResponseEntity.ok(notifyTodoAppResult);
     }
 }

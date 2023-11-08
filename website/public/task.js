@@ -1,7 +1,7 @@
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const HOST_URL = "http://localhost:8090";
 const APP_NAME = "mis";
-const MODEL_NAME = "Test";
+const MODEL_NAME_MAP = new Map([[1, 'Test'], [2, 'Test1']]);
 
 /**
  * 魔方网表中生成BPM任务后回调此方法向第三方系统创建待办
@@ -11,9 +11,11 @@ const MODEL_NAME = "Test";
  * @param url 任务处理链接
  */
 function createTask(id, name, assignee, url) {
-    var targets = {'LoginName': '12fe2de141b7b97b32d1af34204a9f54'};
-    var notifyTodoSendContext = new NotifyTodoSendContext(APP_NAME, MODEL_NAME, id, name, url, 1, targets);
+    var targets = {'LoginName': assignee};
+    var type = 1;
+    var notifyTodoSendContext = new NotifyTodoSendContext(APP_NAME, MODEL_NAME_MAP.get(type), id, name, url, type, targets);
     notifyTodoSendContext.docCreator = assignee;
+    notifyTodoSendContext.others = {'mobileLink': url};
     sendMessages("/v1/message", notifyTodoSendContext);
 }
 
@@ -23,7 +25,9 @@ function createTask(id, name, assignee, url) {
  *
  */
 function completeTask(id) {
-    var notifyTodoRemoveContext =  new NotifyTodoRemoveContext(APP_NAME, MODEL_NAME, id, 1);
+    var type = 1;
+    var notifyTodoRemoveContext = new NotifyTodoRemoveContext(APP_NAME, MODEL_NAME_MAP.get(type), id, type);
+    notifyTodoRemoveContext.targets = {'LoginName': 'User'};
     sendMessages("/v1/message", notifyTodoRemoveContext);
 }
 
@@ -33,10 +37,18 @@ function sendMessages(url, body) {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(body));
     xhr.onload = function () {
-        if (xhr.status === 200) {
-            console.log(xhr.responseText);
-        } else {
+        if (xhr.status !== 200) {
             console.log('Error: ' + xhr.status);
+            return;
+        }
+        console.log(xhr.responseText);
+        let responseJson = JSON.parse(xhr.responseText);
+        if (responseJson.returnState === 0) {
+            console.log('Not operated.');
+        } else if (responseJson.returnState === 1) {
+            console.log('Operation failed:' + responseJson.message);
+        } else {
+            console.log('Operation successful.');
         }
     };
 }
@@ -69,6 +81,6 @@ function formatDate(date) {
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 }
 
-createTask("1", "2", "3", "4");
+createTask("1", "Title", "User", "http://schemas.xmlsoap.org/soap/envelope/");
 
 completeTask("1");
