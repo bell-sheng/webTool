@@ -1,5 +1,7 @@
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const HOST_URL = "http://localhost:8090";
+const APP_NAME = "mis";
+const MODEL_NAME = "Test";
 
 /**
  * 魔方网表中生成BPM任务后回调此方法向第三方系统创建待办
@@ -9,8 +11,8 @@ const HOST_URL = "http://localhost:8090";
  * @param url 任务处理链接
  */
 function createTask(id, name, assignee, url) {
-    var targets = {'Id': '12fe2de141b7b97b32d1af34204a9f54'};
-    var notifyTodoSendContext = new NotifyTodoSendContext("mis", "流程管理", id, name, url, 2, targets);
+    var targets = {'LoginName': '12fe2de141b7b97b32d1af34204a9f54'};
+    var notifyTodoSendContext = new NotifyTodoSendContext(APP_NAME, MODEL_NAME, id, name, url, 1, targets);
     notifyTodoSendContext.docCreator = assignee;
     sendMessages("/v1/students", notifyTodoSendContext);
 }
@@ -21,8 +23,8 @@ function createTask(id, name, assignee, url) {
  *
  */
 function completeTask(id) {
-//TODO:调用第三方待办处理接口改变待办为已办
-
+    var notifyTodoRemoveContext =  new NotifyTodoRemoveContext(APP_NAME, MODEL_NAME, id, 1);
+    sendMessages("/v1/students", notifyTodoRemoveContext);
 }
 
 function sendMessages(url, body) {
@@ -50,6 +52,13 @@ function NotifyTodoSendContext(appName, modelName, modelId, subject, link, type,
     this.targets = targets;
 }
 
+function NotifyTodoRemoveContext(appName, modelName, modelId, optType) {
+    this.appName = appName;
+    this.modelName = modelName;
+    this.modelId = modelId;
+    this.optType = optType;
+}
+
 function formatDate(date) {
     var year = date.getUTCFullYear();
     var month = ("0" + (date.getUTCMonth() + 1)).slice(-2);
@@ -61,3 +70,5 @@ function formatDate(date) {
 }
 
 createTask("1", "2", "3", "4");
+
+completeTask("1");
