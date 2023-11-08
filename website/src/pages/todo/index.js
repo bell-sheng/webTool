@@ -1,6 +1,5 @@
 import React, {Component, memo} from 'react';
 
-var HashMap = Java.type('java.util.HashMap');
 // var Map = Java.type('java.util.Map');
 // var Gson = Java.type('com.google.gson.Gson');
 // var System = Java.type('java.lang.System');
@@ -23,7 +22,6 @@ function createTask(id, name, assignee, url) {
  */
 function completeTask(id) {
 //TODO:调用第三方待办处理接口改变待办为已办
-    var HashMap = Java.type('java.util.HashMap');
 }
 
 class TaskToDo extends Component{

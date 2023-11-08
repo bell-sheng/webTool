@@ -157,6 +157,34 @@ paths:
           description: Not Found
       x-request-examples-description-1: "删除学生请求示例"
       x-request-examples-url-1: "DELETE https://{endpoint}/v1/students/0"
+  /v1/message:
+    post:
+      tags:
+        - MessageTestService
+      summary: "接收到一个消息"
+      operationId: revMessage
+      requestBody:
+        description: "请求体"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotifyTodoContext'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotifyTodoAppResult'
+        201:
+          description: Created
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
 components:
   schemas:
     Student:
@@ -196,3 +224,14 @@ components:
           minLength: 3
           maxLength: 4
           example: boy
+    NotifyTodoContext:
+      type: string
+    NotifyTodoAppResult:
+      properties:
+        returnState:
+          description: "返回状态"
+          type: integer
+          format: int32
+        message:
+          description: "返回信息"
+          type: string

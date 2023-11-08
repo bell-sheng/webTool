@@ -14,7 +14,7 @@ function createTask(id, name, assignee, url) {
     var targets = {'LoginName': '12fe2de141b7b97b32d1af34204a9f54'};
     var notifyTodoSendContext = new NotifyTodoSendContext(APP_NAME, MODEL_NAME, id, name, url, 1, targets);
     notifyTodoSendContext.docCreator = assignee;
-    sendMessages("/v1/students", notifyTodoSendContext);
+    sendMessages("/v1/message", notifyTodoSendContext);
 }
 
 /**
@@ -24,7 +24,7 @@ function createTask(id, name, assignee, url) {
  */
 function completeTask(id) {
     var notifyTodoRemoveContext =  new NotifyTodoRemoveContext(APP_NAME, MODEL_NAME, id, 1);
-    sendMessages("/v1/students", notifyTodoRemoveContext);
+    sendMessages("/v1/message", notifyTodoRemoveContext);
 }
 
 function sendMessages(url, body) {
