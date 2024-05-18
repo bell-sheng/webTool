@@ -83,7 +83,3 @@ function formatDate(date) {
     const seconds = ("0" + date.getUTCSeconds()).slice(-2);
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 }
-
-createTask("1", "Title", "User", "http://schemas.xmlsoap.org/soap/envelope/");
-
-completeTask("1");
