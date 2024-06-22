@@ -1,5 +1,6 @@
 package com.webtool;
 
+import cn.hutool.core.date.DateUtil;
 import com.webtool.service.attendance.AttendanceRequest;
 import com.webtool.service.attendance.AttendanceResponse;
 import com.webtool.service.attendance.AttendanceService;
@@ -10,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
 
 @SpringBootApplication
 @Slf4j
@@ -28,6 +30,9 @@ public class WebToolApplication {
     @PostConstruct
     public void init() {
         log.info("start to attendance request:{}", attendanceRequest);
+        String resultName = "result_" + new Date().getTime() + ".xls";
+        log.info("resultName:{}", resultName);
+        attendanceRequest.setDestFileName(resultName);
         AttendanceResponse attendanceResponse = attendanceService.processOriginData(attendanceRequest);
         ExcelUtils.writeToExcel(attendanceRequest.getDestFileName(), attendanceResponse.getData());
         log.info("end to attendance.");
