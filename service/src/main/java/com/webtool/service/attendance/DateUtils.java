@@ -8,8 +8,11 @@ import com.alibaba.fastjson.JSON;
 import com.webtool.service.attendance.offday.DateInfo;
 import com.webtool.service.attendance.offday.OffDayResponse;
 import lombok.val;
+import org.apache.commons.io.IOUtils;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +26,14 @@ public class DateUtils {
 
     public static boolean isOffDay(String dateByMouth) {
         // https://api.apihubs.cn/holiday/get?size=500&year=2024 调用该接口查询是否OffDay，目前缓存在json文件中
-        String allDateJson = FileUtil.readString("2024.json", StandardCharsets.UTF_8);
+        InputStream inputStream = DateUtils.class.getClassLoader().getResourceAsStream("2024.json");
+        String allDateJson = null;
+        try {
+            allDateJson = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         val offDayResponse = JSON.parseObject(allDateJson, OffDayResponse.class);
         val dateInfos = offDayResponse.getData().getList();
         DateInfo dateInfo = getDateInfoByDate(dateInfos, dateByMouth);
