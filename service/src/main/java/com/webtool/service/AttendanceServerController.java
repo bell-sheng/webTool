@@ -50,7 +50,7 @@ public class AttendanceServerController implements AttendanceServerApi {
         HttpHeaders headers = getHttpHeadersByFile(tempResultFileName);
         return ResponseEntity.ok()
                 .headers(headers)
-                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
     }
 

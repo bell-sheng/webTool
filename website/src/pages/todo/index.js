@@ -40,54 +40,57 @@ class TaskToDo extends Component {
         }
         return (
             <div>
-                <Space.Compact>
-                    <Input
-                        style={{
-                            width: '20%',
-                        }}
-                        defaultValue="年份"
-                    />
-                    <Input
-                        style={{
-                            width: '80%',
-                        }}
-                        onChange={(obj) =>
-                            this.needYear = obj.target.value
-                        }
-                        value={this.state.needYear}
-                    />
-                </Space.Compact>
-                <Space.Compact>
-                    <Input
-                        style={{
-                            width: '20%',
-                        }}
-                        defaultValue="月份"
-                    />
-                    <Input
-                        style={{
-                            width: '80%',
-                        }}
-                        onChange={(obj) => {
-                            console.log(obj)
-                            this.setState({
-                                needMonth: obj.target.value,
-                            })
-                        }
-                        }
-                        value={this.state.needMonth}
-                    />
-                </Space.Compact>
-                <Dragger {...props} data={body}>
-                    <p className="ant-upload-drag-icon">
-                        <InboxOutlined/>
-                    </p>
-                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                    <p className="ant-upload-hint">
-                        Support for a single or bulk upload. Strictly prohibited from uploading company data or other
-                        banned files.
-                    </p>
-                </Dragger>
+                <Space direction="vertical">
+                    <Space.Compact>
+                        <Input
+                            style={{
+                                width: '20%',
+                            }}
+                            defaultValue="年份"
+                        />
+                        <Input
+                            style={{
+                                width: '80%',
+                            }}
+                            onChange={(obj) =>
+                                this.needYear = obj.target.value
+                            }
+                            value={this.state.needYear}
+                        />
+                    </Space.Compact>
+                    <Space.Compact>
+                        <Input
+                            style={{
+                                width: '20%',
+                            }}
+                            defaultValue="月份"
+                        />
+                        <Input
+                            style={{
+                                width: '80%',
+                            }}
+                            onChange={(obj) => {
+                                console.log(obj)
+                                this.setState({
+                                    needMonth: obj.target.value,
+                                })
+                            }
+                            }
+                            value={this.state.needMonth}
+                        />
+                    </Space.Compact>
+                    <Dragger {...props} data={body}>
+                        <p className="ant-upload-drag-icon">
+                            <InboxOutlined/>
+                        </p>
+                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                        <p className="ant-upload-hint">
+                            Support for a single or bulk upload. Strictly prohibited from uploading company data or
+                            other
+                            banned files.
+                        </p>
+                    </Dragger>
+                </Space>
             </div>
         );
     }
