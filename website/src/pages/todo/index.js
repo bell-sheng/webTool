@@ -1,36 +1,96 @@
 import React, {Component, memo} from 'react';
+import {InboxOutlined} from '@ant-design/icons';
 
-// var Map = Java.type('java.util.Map');
-// var Gson = Java.type('com.google.gson.Gson');
-// var System = Java.type('java.lang.System');
+import {Input, message, Space, Upload} from 'antd';
 
-/**
- * 魔方网表中生成BPM任务后回调此方法向第三方系统创建待办
- * @param id 任务ID
- * @param name 任务名称
- * @param assignee 任务处理人账号
- * @param url 任务处理链接
- */
-function createTask(id, name, assignee, url) {
-//TODO:调用第三方待办接口创建待办
-}
+class TaskToDo extends Component {
 
-/**
- * 魔方网表中完成BPM任务后回调此方法向第三方修改待办状态
- * @param id 任务ID
- *
- */
-function completeTask(id) {
-//TODO:调用第三方待办处理接口改变待办为已办
-}
+    constructor(props) {
+        super(props);
+        this.state = {
+            needYear: 2024,
+            needMonth: 5,
+        }
+    }
 
-class TaskToDo extends Component{
     render() {
+        const {Dragger} = Upload;
+        const props = {
+            name: 'file',
+            multiple: true,
+            action: 'http://localhost:8090/v1/api/attendance/statistics',
+            onChange(info) {
+                const {status} = info.file;
+                if (status !== 'uploading') {
+                    console.log(info.file, info.fileList);
+                }
+                if (status === 'done') {
+                    message.success(`${info.file.name} file uploaded successfully.`);
+                } else if (status === 'error') {
+                    message.error(`${info.file.name} file upload failed.`);
+                }
+            },
+            onDrop(e) {
+                console.log('Dropped files', e.dataTransfer.files);
+            },
+        };
+        const body = {
+            needYear: this.state.needYear,
+            needMonth: this.state.needMonth,
+        }
         return (
             <div>
-                TaskTo
+                <Space.Compact>
+                    <Input
+                        style={{
+                            width: '20%',
+                        }}
+                        defaultValue="年份"
+                    />
+                    <Input
+                        style={{
+                            width: '80%',
+                        }}
+                        onChange={(obj) =>
+                            this.needYear = obj.target.value
+                        }
+                        value={this.state.needYear}
+                    />
+                </Space.Compact>
+                <Space.Compact>
+                    <Input
+                        style={{
+                            width: '20%',
+                        }}
+                        defaultValue="月份"
+                    />
+                    <Input
+                        style={{
+                            width: '80%',
+                        }}
+                        onChange={(obj) => {
+                            console.log(obj)
+                            this.setState({
+                                needMonth: obj.target.value,
+                            })
+                        }
+                        }
+                        value={this.state.needMonth}
+                    />
+                </Space.Compact>
+                <Dragger {...props} data={body}>
+                    <p className="ant-upload-drag-icon">
+                        <InboxOutlined/>
+                    </p>
+                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                    <p className="ant-upload-hint">
+                        Support for a single or bulk upload. Strictly prohibited from uploading company data or other
+                        banned files.
+                    </p>
+                </Dragger>
             </div>
         );
     }
 }
+
 export default memo(TaskToDo);
