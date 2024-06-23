@@ -17,24 +17,24 @@ import java.util.Date;
 @Slf4j
 public class WebToolApplication {
 
-    @Autowired
-    private AttendanceRequest attendanceRequest;
-
-    @Autowired
-    private AttendanceService attendanceService;
+//    @Autowired
+//    private AttendanceRequest attendanceRequest;
+//
+//    @Autowired
+//    private AttendanceService attendanceService;
 
     public static void main(String[] args) {
         SpringApplication.run(WebToolApplication.class, args);
     }
 
-    @PostConstruct
-    public void init() {
-        log.info("start to attendance request:{}", attendanceRequest);
-        String resultName = "result_" + new Date().getTime() + ".xls";
-        log.info("resultName:{}", resultName);
-        attendanceRequest.setDestFileName(resultName);
-        AttendanceResponse attendanceResponse = attendanceService.processOriginData(attendanceRequest);
-        ExcelUtils.writeToExcel(attendanceRequest.getDestFileName(), attendanceResponse.getData());
-        log.info("end to attendance.");
-    }
+    //@PostConstruct
+//    public void init() {
+//        log.info("start to attendance request:{}", attendanceRequest);
+//        String resultName = "result_" + new Date().getTime() + ".xls";
+//        log.info("resultName:{}", resultName);
+//        attendanceRequest.setDestFileName(resultName);
+//        AttendanceResponse attendanceResponse = attendanceService.processOriginData(attendanceRequest);
+//        ExcelUtils.writeToExcel(attendanceRequest.getDestFileName(), attendanceResponse.getData());
+//        log.info("end to attendance.");
+//    }
 }

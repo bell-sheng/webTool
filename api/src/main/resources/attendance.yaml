@@ -58,10 +58,6 @@ paths:
             multipart/form-data:
               schema:
                 type: object
-                properties:
-                  destFile:
-                    type: string
-                    format: binary
         201:
           description: Created
         400:
