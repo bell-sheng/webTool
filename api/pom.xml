@@ -52,11 +52,30 @@
                 <!--https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen-maven-plugin/README.md#general-configuration-parameters-->
                 <executions>
                     <execution>
+                        <id>student</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/student.yaml</inputSpec>
+                            <language>spring</language>
+                            <apiPackage>com.webtool.api</apiPackage>
+                            <modelPackage>com.webtool.model</modelPackage>
+                            <configOptions>
+                                <delegatePattern>true</delegatePattern>
+                                <interfaceOnly>true</interfaceOnly>
+                                <java8>true</java8>
+                                <useTags>true</useTags>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>attendance</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/attendance.yaml</inputSpec>
                             <language>spring</language>
                             <apiPackage>com.webtool.api</apiPackage>
                             <modelPackage>com.webtool.model</modelPackage>
