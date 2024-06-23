@@ -37,19 +37,17 @@ public class AttendanceServerController implements AttendanceServerApi {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        String tempResultFile = TEMP_ROOT_PATH + "result_" + new Date().getTime() + ".xls";
+        String tempResultFileName = "result_" + new Date().getTime() + ".xls";
+        String tempResultFilePath = TEMP_ROOT_PATH + tempResultFileName;
         AttendanceRequest attendanceRequest = new AttendanceRequest();
         attendanceRequest.setYear(needYear);
         attendanceRequest.setMonth(needMonth);
-        attendanceRequest.setDestFileName(tempResultFile);
+        attendanceRequest.setDestFileName(tempResultFilePath);
         attendanceRequest.setOriginFileName(originFileName);
         AttendanceResponse attendanceResponse = attendanceService.processOriginData(attendanceRequest);
-        ExcelUtils.writeToExcel(attendanceRequest.getDestFileName(), attendanceResponse.getData());
-
-        Resource resource = new PathResource(tempResultFile);
-
-        HttpHeaders headers = getHttpHeadersByFile(tempResultFile);
+        ExcelUtils.writeToExcel(tempResultFilePath, attendanceResponse.getData());
+        Resource resource = new PathResource(tempResultFilePath);
+        HttpHeaders headers = getHttpHeadersByFile(tempResultFileName);
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentType(MediaType.MULTIPART_FORM_DATA)
