@@ -18,7 +18,7 @@
 
     <modules>
         <module>api</module>
-
+        <module>website</module>
         <module>service</module>
         <module>application</module>
     </modules>
