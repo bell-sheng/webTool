@@ -18,7 +18,7 @@ class TaskToDo extends Component {
         const props = {
             name: 'file',
             multiple: true,
-            action: 'http://localhost:8090/v1/api/attendance/statistics',
+            action: 'http://localhost:8090/v1/attendance/statistics',
             onChange(info) {
                 const {status} = info.file;
                 if (status !== 'uploading') {
