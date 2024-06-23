@@ -10,7 +10,6 @@ import com.webtool.service.attendance.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,7 +24,7 @@ import java.util.Date;
 @RestController
 @Slf4j
 public class AttendanceServerController implements AttendanceServerApi {
-    private static final String TEMP_ROOT_PATH = "D:\\learn\\workspace\\temp\\";
+    private static final String TEMP_ROOT_PATH = "/opt/tools/tmp/";
 
     @Autowired
     private AttendanceService attendanceService;
